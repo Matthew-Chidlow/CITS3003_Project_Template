@@ -278,7 +278,7 @@ void init( void )
     glGenTextures(numTextures, textureIDs); CheckError(); // Allocate texture objects
 
     // Load shaders and use the resulting shader program
-    shaderProgram = InitShader( "vStart.glsl", "fStart.glsl" );
+    shaderProgram = InitShader( "res/shaders/vStart.glsl", "res/shaders/fStart.glsl" );
 
     glUseProgram( shaderProgram ); CheckError();
 
@@ -612,7 +612,7 @@ void timer(int unused)
 
 //----------------------------------------------------------------------------
 
-char dirDefault1[] = "models-textures";
+char dirDefault1[] = "res/models-textures";
 char dirDefault3[] = "/tmp/models-textures";
 char dirDefault4[] = "/d/models-textures";
 char dirDefault2[] = "/cslinux/examples/CITS3003/project-files/models-textures";
