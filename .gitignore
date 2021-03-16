@@ -1,4 +1,4 @@
 .idea
-cmake-build-*
+cmake-build*
 res/models-textures
 assimp_log.txt

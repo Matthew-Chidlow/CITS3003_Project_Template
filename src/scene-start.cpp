@@ -2,7 +2,7 @@
 #include "Angel.h"
 
 #include <stdlib.h>
-#include <dirent.h>
+// #include <dirent.h>
 #include <time.h>
 
 // Open Asset Importer header files (in ../../assimp--3.0.1270/include)
@@ -10,6 +10,9 @@
 #include <assimp/cimport.h>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+
+#include <vector>
+#include <filesystem>
 
 GLint windowHeight=640, windowWidth=960;
 
@@ -135,7 +138,9 @@ void loadMeshIfNotAlreadyLoaded(int meshNumber)
     glBufferSubData( GL_ARRAY_BUFFER, sizeof(float)*6*nVerts, sizeof(float)*3*nVerts, mesh->mNormals);
 
     // Load the element index data
-    GLuint elements[mesh->mNumFaces*3];
+    //GLuint elements[mesh->mNumFaces*3];
+	std::vector<GLuint> elements = std::vector<GLuint>(mesh->mNumFaces * 3, 0);
+
     for (GLuint i=0; i < mesh->mNumFaces; i++) {
         elements[i*3] = mesh->mFaces[i].mIndices[0];
         elements[i*3+1] = mesh->mFaces[i].mIndices[1];
@@ -145,7 +150,7 @@ void loadMeshIfNotAlreadyLoaded(int meshNumber)
     GLuint elementBufferId[1];
     glGenBuffers(1, elementBufferId);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferId[0]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * mesh->mNumFaces * 3, elements, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * mesh->mNumFaces * 3, elements.data(), GL_STATIC_DRAW);
 
     // vPosition it actually 4D - the conversion sets the fourth dimension (i.e. w) to 1.0                 
     glVertexAttribPointer( vPosition, 3, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0) );
@@ -461,7 +466,8 @@ static void lightMenu(int id)
 static int createArrayMenu(int size, const char menuEntries[][128], void(*menuFn)(int))
 {
     int nSubMenus = (size-1)/10 + 1;
-    int subMenus[nSubMenus];
+    //int subMenus[nSubMenus];
+	std::vector<int> subMenus = std::vector<int>(nSubMenus, 0);
 
     for (int i=0; i < nSubMenus; i++) {
         subMenus[i] = glutCreateMenu(menuFn);
@@ -637,10 +643,10 @@ int main( int argc, char* argv[] )
     // Set the models-textures directory, via the first argument or some handy defaults.
     if (argc > 1)
         strcpy(dataDir, argv[1]);
-    else if (opendir(dirDefault1)) strcpy(dataDir, dirDefault1);
-    else if (opendir(dirDefault2)) strcpy(dataDir, dirDefault2);
-    else if (opendir(dirDefault3)) strcpy(dataDir, dirDefault3);
-    else if (opendir(dirDefault4)) strcpy(dataDir, dirDefault4);
+    else if (std::filesystem::exists(dirDefault1)) strcpy(dataDir, dirDefault1);
+    else if (std::filesystem::exists(dirDefault2)) strcpy(dataDir, dirDefault2);
+    else if (std::filesystem::exists(dirDefault3)) strcpy(dataDir, dirDefault3);
+    else if (std::filesystem::exists(dirDefault4)) strcpy(dataDir, dirDefault4);
     else fileErr(dirDefault1);
 
     glutInit( &argc, argv );
