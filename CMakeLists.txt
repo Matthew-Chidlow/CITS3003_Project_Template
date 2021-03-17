@@ -15,13 +15,15 @@ add_compile_definitions(GLEW_INCLUDE=<${CMAKE_SOURCE_DIR}/lib/glew/include/GL/gl
 add_compile_definitions(GLEW_STATIC)
 add_subdirectory(lib/glew EXCLUDE_FROM_ALL)
 
-set(FREEGLUT_BUILD_DEMOS OFF CACHE BOOL "" FORCE)
-set(FREEGLUT_BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
-set(FREEGLUT_BUILD_STATIC_LIBS ON CACHE BOOL "" FORCE)
 include_directories(lib/freeglut/freeglut/freeglut/include)
 include_directories(lib/freeglut/freeglut/freeglut/include/GL)
-add_compile_definitions(FREEGLUT_STATIC)
-add_subdirectory(lib/freeglut/freeglut/freeglut EXCLUDE_FROM_ALL)
+if (NOT APPLE)
+	set(FREEGLUT_BUILD_DEMOS OFF CACHE BOOL "" FORCE)
+	set(FREEGLUT_BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+	set(FREEGLUT_BUILD_STATIC_LIBS ON CACHE BOOL "" FORCE)
+	add_compile_definitions(FREEGLUT_STATIC)
+	add_subdirectory(lib/freeglut/freeglut/freeglut EXCLUDE_FROM_ALL)
+endif()
 
 set(ASSIMP_BUILD_ASSIMP_TOOLS OFF CACHE BOOL "" FORCE)
 set(ASSIMP_BUILD_TESTS OFF CACHE BOOL "" FORCE)
@@ -38,4 +40,12 @@ if (MSVC)
 	set_property(TARGET start_scene PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 endif(MSVC)
 
-target_link_libraries(start_scene angel libglew_static freeglut_static assimp bitmap)
+if (APPLE)
+	target_link_libraries(start_scene angel libglew_static "-framework GLUT" assimp bitmap)
+else()
+	target_link_libraries(start_scene angel libglew_static freeglut_static assimp bitmap)
+endif()
+
+add_custom_command(TARGET start_scene
+		POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:start_scene> ${CMAKE_SOURCE_DIR})
