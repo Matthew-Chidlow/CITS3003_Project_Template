@@ -1,10 +1,6 @@
 
 #include "Angel.h"
 
-#include <stdlib.h>
-// #include <dirent.h>
-#include <time.h>
-
 // Open Asset Importer header files (in ../../assimp--3.0.1270/include)
 // This is a standard open source library for loading meshes, see gnatidread.h
 #include <assimp/cimport.h>
@@ -180,6 +176,14 @@ void loadMeshIfNotAlreadyLoaded(int meshNumber) {
 
 //----------------------------------------------------------------------------
 
+void zoomIn() {
+    viewDist = (viewDist < 0.0 ? viewDist : viewDist * 0.8) - 0.05;
+}
+
+void zoomOut() {
+    viewDist = (viewDist < 0.0 ? viewDist : viewDist * 1.25) + 0.05;
+}
+
 static void mouseClickOrScroll(int button, int state, int x, int y) {
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
         if (glutGetModifiers() != GLUT_ACTIVE_SHIFT) activateTool(button);
@@ -189,9 +193,9 @@ static void mouseClickOrScroll(int button, int state, int x, int y) {
     else if (button == GLUT_MIDDLE_BUTTON && state == GLUT_UP) deactivateTool();
 
     else if (button == 3) { // scroll up
-        viewDist = (viewDist < 0.0 ? viewDist : viewDist * 0.8) - 0.05;
+        zoomIn();
     } else if (button == 4) { // scroll down
-        viewDist = (viewDist < 0.0 ? viewDist : viewDist * 1.25) + 0.05;
+        zoomOut();
     }
 }
 
@@ -574,13 +578,13 @@ void keyboard(unsigned char key, int x, int y) {
         }
         case 'w': {
             if (glutGetModifiers() == GLUT_ACTIVE_ALT) { // up + alt
-                viewDist = (viewDist < 0.0 ? viewDist : viewDist * 0.8) - 0.05;
+                zoomIn();
             }
             break;
         }
         case 's': {
             if (glutGetModifiers() == GLUT_ACTIVE_ALT) { // down + alt
-                viewDist = (viewDist < 0.0 ? viewDist : viewDist * 1.25) + 0.05;
+                zoomOut();
             }
             break;
         }
@@ -592,19 +596,18 @@ void specialKeys(int key, int x, int y) {
         case GLUT_KEY_UP: {
             printf("test");
             if (glutGetModifiers() == GLUT_ACTIVE_ALT) { // up + alt
-                viewDist = (viewDist < 0.0 ? viewDist : viewDist * 0.8) - 0.05;
+                zoomIn();
             }
             break;
         }
         case GLUT_KEY_DOWN: {
             if (glutGetModifiers() == GLUT_ACTIVE_ALT) { // down + alt
-                viewDist = (viewDist < 0.0 ? viewDist : viewDist * 1.25) + 0.05;
+                zoomOut();
             }
             break;
         }
     }
 }
-
 //----------------------------------------------------------------------------
 
 void idle(void) {

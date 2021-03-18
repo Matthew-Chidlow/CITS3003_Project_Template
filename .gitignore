@@ -2,4 +2,4 @@
 cmake-build*
 res/models-textures
 assimp_log.txt
-start_scene
+start_scene*
