@@ -8,7 +8,14 @@
 #include <assimp/postprocess.h>
 
 #include <vector>
+
+#ifdef LAB_PC
+#include <dirent.h>
+#define EXISTS opendir
+#else
 #include <filesystem>
+#define EXISTS std::filesystem::exists
+#endif
 
 GLint windowHeight = 640, windowWidth = 960;
 
@@ -674,17 +681,17 @@ int main(int argc, char *argv[]) {
     // Set the models-textures directory, via the first argument or some handy defaults.
     if (argc > 1)
         strcpy(dataDir, argv[1]);
-    else if (std::filesystem::exists(dirDefault1)) strcpy(dataDir, dirDefault1);
-    else if (std::filesystem::exists(dirDefault2)) strcpy(dataDir, dirDefault2);
-    else if (std::filesystem::exists(dirDefault3)) strcpy(dataDir, dirDefault3);
-    else if (std::filesystem::exists(dirDefault4)) strcpy(dataDir, dirDefault4);
+    else if (EXISTS(dirDefault1)) strcpy(dataDir, dirDefault1);
+    else if (EXISTS(dirDefault2)) strcpy(dataDir, dirDefault2);
+    else if (EXISTS(dirDefault3)) strcpy(dataDir, dirDefault3);
+    else if (EXISTS(dirDefault4)) strcpy(dataDir, dirDefault4);
     else fileErr(dirDefault1);
 
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
     glutInitWindowSize(windowWidth, windowHeight);
 
-#ifndef __APPLE__
+#if !defined(__APPLE__) && !defined(LAB_PC)
     glutInitContextVersion(3, 2);
     glutInitContextProfile(GLUT_CORE_PROFILE);
 #endif
