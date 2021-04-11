@@ -666,7 +666,7 @@ char dirDefault2[] = "/cslinux/examples/CITS3003/project-files/models-textures";
 void fileErr(char *fileName) {
     printf("Error reading file: %s\n", fileName);
     printf("When not in the CSSE labs, you will need to include the directory containing\n");
-    printf("the models on the command line, or put it in the same folder as the exectutable.");
+    printf("the models on the command line, or put it in the res folder next to the executable.");
     exit(1);
 }
 
