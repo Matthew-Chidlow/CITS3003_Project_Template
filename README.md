@@ -41,7 +41,7 @@ To clean the project (one of):
 * (If you could build the labs, the only extra thing you need is cmake.)
 * A build chain, like: gcc/g++ or clang, etc
 * The build tool: `cmake` https://coderefinery.github.io/installation/cmake/
-* The dev-lib: `libxmu-dev` via e.g. `sudo apt install libxmu-dev`
+* Some dev dependenices, which for me on a fresh Ubuntu 20.04 VM are: `sudo apt install cmake libxmu-dev g++ libx11-dev libgl1-mesa-dev libglu1-mesa-dev`
 
 #### Mac:
 
