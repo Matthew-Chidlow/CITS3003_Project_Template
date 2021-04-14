@@ -9,7 +9,7 @@
 
 #include <vector>
 
-#ifdef LAB_PC
+#if defined(__APPLE__) || defined(LAB_PC)
 #include <dirent.h>
 #define EXISTS opendir
 #else
