@@ -40,20 +40,29 @@ To clean the project (one of):
 
 * (If you could build the labs, the only extra thing you need is cmake.)
 * A build chain, like: gcc/g++ or clang, etc
-* The build tool: `cmake` https://coderefinery.github.io/installation/cmake/
-* Some dev dependenices, which for me on a fresh Ubuntu 20.04 VM are: `sudo apt install cmake libxmu-dev g++ libx11-dev libgl1-mesa-dev libglu1-mesa-dev`
+* The build tool: `cmake`
+  * A simple `sudo apt install cmake` should work, or whatever is appropriate for your distro
+
+* Some dev dependencies, which for me on a fresh Ubuntu 20.04 VM are: `sudo apt install cmake libxmu-dev g++ libx11-dev libgl1-mesa-dev libglu1-mesa-dev xorg-dev`
 
 #### Mac:
 
 * A build chain, like: gcc/g++ or clang, etc
-* The build tool: `cmake` https://coderefinery.github.io/installation/cmake (make sure to add the binary to PATH)
+* The build tool: `cmake`
+  * Download `.dmg` mac installer from https://cmake.org/download/ and install
+  * Then run the cmake program (like you'd open any other) then from the `Tools` menu select `How to Install For Command Line Use`
+    and run one of the options that is presented to you.
+  * You can now close cmake
 * x11 from https://xquartz.org
 
 #### Windows:
 
 * (If you could build the Windows-Labs Windows port of the labs then you already have everything)
 * Visual Studio (not code), and select the `Desktop development with C++` `Workload` in the installer https://visualstudio.microsoft.com/downloads
-* the build tool: `cmake` https://coderefinery.github.io/installation/cmake (make sure to add the binary to PATH)
+* The build tool: `cmake`
+  * Download `.msi` Windows installer from https://cmake.org/download/
+  * When installing, **tick the box that asks you if you want to add it to the PATH.**
+    * Should you fail to do this, you must add it manually afterwards
 
 ## Initial setup:
 * Download the project template .zip file and unzip it somewhere
@@ -71,7 +80,7 @@ To clean the project (one of):
 
 ### VS Code:
   Open the top folder and I would suggest the `C/C++`, `CMake` and `CMake Tools` extensions.
-  Then you build the project with `f7` and when it asks for which build tools to use, select the second option which is to just let it pick.
+  Then you build the project with `f7` (or right clicking CMakeLists.txt and selecting `build all`) and when it asks for which build tools to use, select the second option which is to just let it pick.
   Then when you try to run it via Run->Start (Without Debugging) you will need to setup a launch.json, just set
   `"program": "${workspaceFolder}/start_scene"` (On Windows you need to add `.exe`) and it should just work now.
   (see for more on how to use CMake Tools: https://github.com/microsoft/vscode-cmake-tools/blob/main/docs/how-to.md#build-a-project)
