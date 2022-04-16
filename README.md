@@ -43,7 +43,7 @@ To clean the project (one of):
 * The build tool: `cmake`
   * A simple `sudo apt install cmake` should work, or whatever is appropriate for your distro
 
-* Some dev dependencies, which for me on a fresh Ubuntu 20.04 VM are: `sudo apt install cmake libxmu-dev g++ libx11-dev libgl1-mesa-dev libglu1-mesa-dev xorg-dev`
+* Some dev dependencies, which for me on a fresh Ubuntu 20.04 VM are: `sudo apt install cmake libxmu-dev g++ libx11-dev libgl1-mesa-dev libglu1-mesa-dev xorg-dev libxi-dev`
 
 #### Mac:
 
