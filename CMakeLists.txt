@@ -15,14 +15,14 @@ add_compile_definitions(GLEW_INCLUDE=<${CMAKE_SOURCE_DIR}/lib/glew/include/GL/gl
 add_compile_definitions(GLEW_STATIC)
 add_subdirectory(lib/glew EXCLUDE_FROM_ALL)
 
-include_directories(lib/freeglut/freeglut/freeglut/include)
-include_directories(lib/freeglut/freeglut/freeglut/include/GL)
+include_directories(lib/freeglut/include)
+include_directories(lib/freeglut/include/GL)
 if (NOT APPLE)
 	set(FREEGLUT_BUILD_DEMOS OFF CACHE BOOL "" FORCE)
 	set(FREEGLUT_BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
 	set(FREEGLUT_BUILD_STATIC_LIBS ON CACHE BOOL "" FORCE)
 	add_compile_definitions(FREEGLUT_STATIC)
-	add_subdirectory(lib/freeglut/freeglut/freeglut EXCLUDE_FROM_ALL)
+	add_subdirectory(lib/freeglut EXCLUDE_FROM_ALL)
 endif()
 
 set(ASSIMP_BUILD_ASSIMP_TOOLS OFF CACHE BOOL "" FORCE)
